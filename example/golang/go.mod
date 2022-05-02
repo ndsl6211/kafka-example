@@ -1,4 +1,4 @@
-module mashu.kafka.example
+module idv.mashu.example.kafka
 
 go 1.15
 
