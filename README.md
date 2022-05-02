@@ -99,5 +99,12 @@ to install it:
 ```
 
 ### Java
+```
+  <dependency>
+    <groupId>org.apache.kafka</groupId>
+    <artifactId>kafka-clients</artifactId>
+    <version>3.0.0</version>
+  </dependency>
+```
 
 ### Python
