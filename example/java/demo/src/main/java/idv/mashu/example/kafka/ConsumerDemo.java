@@ -8,7 +8,6 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.common.errors.InterruptException;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +15,9 @@ import org.slf4j.LoggerFactory;
 public class ConsumerDemo {
   private final Logger logger = LoggerFactory.getLogger(ProducerDemo.class);
   private Properties p;
+  private String topic;
 
-  public ConsumerDemo() {
-    String server = "localhost:9092";
+  public ConsumerDemo(String server, String topic) {
     String groupId = "java-consumer";
 
     Properties p = new Properties();
@@ -51,8 +50,7 @@ public class ConsumerDemo {
       }
     });
 
-    String topic = "java-example";
-    consumer.subscribe(Arrays.asList(topic));
+    consumer.subscribe(Arrays.asList(this.topic));
 
     try {
       while (true) {

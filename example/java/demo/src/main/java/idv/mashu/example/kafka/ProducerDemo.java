@@ -14,27 +14,28 @@ import org.slf4j.LoggerFactory;
 public class ProducerDemo {
   private final Logger logger = LoggerFactory.getLogger(ProducerDemo.class);
   private Properties p;
+  private String topic;
 
-  public ProducerDemo() {
-    String bootstrapServer = "localhost:9092";
+  public ProducerDemo(String server, String topic) {
 
     Properties p = new Properties();
-    p.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
+    p.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, server);
     p.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
     p.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
     p.setProperty(ProducerConfig.METRICS_RECORDING_LEVEL_CONFIG, "INFO");
 
     this.p = p;
+    this.topic = topic;
   }
 
   public void startWithKey() {
     this.logger.info("Simple Kafka Producer with Key");
 
-    KafkaProducer<String, String> producer = new KafkaProducer<>(p);
+    KafkaProducer<String, String> producer = new KafkaProducer<>(this.p);
 
     this.logger.info("prepare record with topic \"java-example\" and \"message1\"");
     ProducerRecord<String, String> record = new ProducerRecord<>(
-      "java-example",
+      this.topic,
       "key_1",
       "message1"
     );
@@ -64,8 +65,8 @@ public class ProducerDemo {
 
     KafkaProducer<String, String> producer = new KafkaProducer<>(p);
 
-    this.logger.info("prepare record with topic \"java-example\" and \"message1\"");
-    ProducerRecord<String, String> record = new ProducerRecord<>("java-example", "message1");
+    this.logger.info("prepare record with topic \"" + this.topic + "\" and \"message1\"");
+    ProducerRecord<String, String> record = new ProducerRecord<>(this.topic, "message1");
 
     // send data asynchronously 
     producer.send(record, new Callback() {
