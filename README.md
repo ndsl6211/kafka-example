@@ -108,3 +108,9 @@ to install it:
 ```
 
 ### Python
+
+
+## Connect to Kafka Broker in Docker
+
+[Baeldung](https://www.baeldung.com/kafka-docker-connection)
+[Confluent](https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/)
