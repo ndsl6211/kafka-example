@@ -8,6 +8,35 @@ sourcing of Domain Driven Design.
 
 [introduction to kafka from official website](https://kafka.apache.org/intro)
 
+## Why Kafka?
+
+### Compare to HTTP Request
+- a http request is synchronous, that is, the sender have to wait for the
+  response sent back from the server.
+- If service B, C have to send their log to service A (maybe A is a log
+  warehouse), and if A provide http interface, then B, C should send request to
+  A through HTTP. It's not a big problem, but if there are lots of services like
+  B and C want to store their log into A, it will be a huge burden if the all
+  the clients send request to A through HTTP.
+
+  Solution:
+    We can use Kafka to **decouple** the log storage server and client. When a
+    client want to use service A to store its log, it just push the log message
+    (event) to a Kafka topic, and service A will go to consume (handle) it as
+    soon as possible. In addition, if there are large numbers of service that
+    want to use service A, A will not be exhausted by the large inbound traffic.
+
+- In contrast, consider a scenario that if a service A have to constantly send
+  message to a number of different services, say service B, C, D...
+  In the case of using HTTP, service A must know the detail of each service that
+  event will be sent to, it's a nightmare for management and maintenance.
+  However, if we choose Kafka in this scenario, everything will be better.
+
+- The use of message queue can let the consumer to decide the **consume rate**
+  to data itself, the client just have to send the message to the messaging
+  server, and then it doesn't need to care about anything about that. The rest
+  is the work of the consumer
+
 ## Basic Concepts of Kafka
 - a **broker** represent a server node in Kafka cluster
 - **producer** can produce an event to a **topic**
